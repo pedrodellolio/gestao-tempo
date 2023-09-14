@@ -1,7 +1,6 @@
 import { CalendarIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { useState } from "react";
 import { Calendar } from "./ui/calendar";
 import { cn } from "../../@/lib/utils";
 import { format } from "date-fns";
@@ -39,7 +38,7 @@ function DatePicker(props: Props) {
               locale={ptBR}
               mode="single"
               selected={props.value}
-              onSelect={props.setValue}
+              onDayClick={props.setValue}
             />
           </PopoverClose>
         </PopoverContent>
