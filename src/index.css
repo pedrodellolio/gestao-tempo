@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #0a0911;
+  --bg-secondary: #1e1b31;
+  --bg-dark: #14121e;
+  --border: #1f2937;
+  --calendar: #12111e;
+  --accent: #490f9d;
+  --accent-dark: #330b6f;
+  --fc-today-bg-color: #31235926;
+  --text-secondary: #b0aebd;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: var(--bg-primary);
+  color: white;
+}
+
+.fc-scrollgrid-section-body {
+  background-color: var(--calendar);
+  color: white;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+  background-color: var(--accent-dark);
+}
+.fc-scrollgrid-section-header {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  color: white;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th,
+.fc-theme-standard .fc-scrollgrid {
+  border: 1px solid var(--border);
+}
+
+.fc {
+  height: 94vh;
+}
+
+.fc .fc-button-primary {
+  background-color: var(--accent);
+  border: none;
+}
+
+.fc-button.fc-next-button,
+.fc-button.fc-prev-button {
+  background-color: transparent;
+}
+
+.fc-col-header-cell-cushion {
+  font-weight: 500;
+}
+
+.fc .fc-button-primary:disabled {
+  background-color: var(--bg-primary);
+}
+
+/* .fc .fc-button-primary:hover {
+  background-color: blue;
+} */
+
+.fc-header-toolbar {
+  padding: 0 2rem;
+}
+
+.fc-col-header-cell div {
+  border-top: 1px solid var(--bg-primary);
+}
+
+.fc-theme-standard th {
+  border-bottom: 1px solid var(--border);
+}
+
+td.fc-daygrid-day {
+  padding: 0 0.6rem;
+}
+
+.fc-toolbar {
+  text-transform: uppercase;
+  font-size: 14px;
+}
