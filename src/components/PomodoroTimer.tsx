@@ -51,7 +51,7 @@ function PomodoroTimer({
   const percentage = ((totalSeconds - remainingSeconds) / totalSeconds) * 100;
 
   return (
-    <div className="w-[25%] m-0">
+    <div className="w-[70%] m-0">
       <CircularProgressbar
         value={percentage}
         strokeWidth={3}

@@ -7,8 +7,30 @@ import { useState } from "react";
 import Task from "../models/Task";
 
 function Home() {
-  const [tasks, setTasks] = useState<Task[]>([]);
-
+  const [tasks, setTasks] = useState<Task[]>([
+    {
+      title: "Trabalho POO",
+      backgroundColor: "#ff75c3",
+      date: new Date(),
+      start: 1694991600000,
+      end: 1694991600000,
+    },
+    {
+      title: "Prova BD2",
+      backgroundColor: "#70e2ff",
+      date: new Date(),
+      start: 1694991600000,
+      end: 1694991600000,
+    },
+    {
+      title: "Consulta",
+      backgroundColor: "#ffa647",
+      date: new Date(),
+      start: 1694991600000,
+      end: 1694991600000,
+    },
+  ]);
+  console.log(tasks);
   return (
     <main>
       <TaskForm setTasks={setTasks} />

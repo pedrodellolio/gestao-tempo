@@ -6,6 +6,7 @@ import Root from "./routes/Root";
 import Pomodoro from "./routes/Pomodoro";
 import Home from "./routes/Home";
 import Progresso from "./routes/Progresso";
+import { PreferencesProvider } from "./context/PreferencesContext";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <PreferencesProvider>
+      <RouterProvider router={router} />
+    </PreferencesProvider>
   </React.StrictMode>
 );

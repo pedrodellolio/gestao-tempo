@@ -1,11 +1,18 @@
 import { Outlet } from "react-router-dom";
 import SideBar from "../components/SideBar";
+import { usePreferences } from "../hooks/usePreferences";
 
 function Root() {
+  const { isMenuOpen } = usePreferences();
+
   return (
     <>
       <SideBar />
-      <div className="ml-60 pt-8 bg-[var(--bg-primary)]" id="detail">
+      <div
+        className={`${
+          isMenuOpen ? "ml-60" : "ml-24"
+        } pt-8 bg-[var(--bg-primary)]" id="detail`}
+      >
         <Outlet />
       </div>
     </>
