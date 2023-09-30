@@ -8,6 +8,7 @@ import Home from "./routes/Home";
 import Progresso from "./routes/Progresso";
 import { PreferencesProvider } from "./context/PreferencesContext";
 import Login from "./routes/Login";
+import Register from "./routes/Register";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);
 
