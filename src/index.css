@@ -7,11 +7,13 @@
   --bg-secondary: #1e1b31;
   --bg-dark: #14121e;
   --border: #1f2937;
+  --border-secondary: #363159;
   --calendar: #12111e;
   --accent: #490f9d;
   --accent-dark: #330b6f;
   --fc-today-bg-color: #31235926;
   --text-secondary: #b0aebd;
+  --text-accent: #a05fff;
 }
 
 body {

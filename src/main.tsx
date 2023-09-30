@@ -7,6 +7,7 @@ import Pomodoro from "./routes/Pomodoro";
 import Home from "./routes/Home";
 import Progresso from "./routes/Progresso";
 import { PreferencesProvider } from "./context/PreferencesContext";
+import Login from "./routes/Login";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
         element: <Progresso />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 
