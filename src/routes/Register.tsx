@@ -16,7 +16,7 @@ function Login() {
       <div className="w-96">
         <h1 className="font-semibold text-4xl mt-28">Crie sua conta</h1>
         <p className="mt-2 text-[var(--text-secondary)]">
-         Transforme a maneira como você trabalha
+          Transforme a maneira como você trabalha
         </p>
         <img className="mt-20" src={UndrawMyPassword} width={300} alt="" />
       </div>
@@ -33,7 +33,7 @@ function Login() {
               <Label className="text-left w-full">Nome</Label>
               <Input
                 value={nome}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setNome(e.target.value)}
                 placeholder="Digite seu nome"
                 className="h-10 border-[var(--border-secondary)]"
                 type="text"
@@ -44,7 +44,7 @@ function Login() {
               <Label className="text-left w-full">Sobrenome</Label>
               <Input
                 value={sobrenome}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setSobrenome(e.target.value)}
                 placeholder="Digite seu sobrenome"
                 className="h-10 border-[var(--border-secondary)]"
                 type="email"

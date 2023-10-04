@@ -5,7 +5,7 @@ import { auth, googleProvider } from "../services/firebase";
 interface AuthContextData {
   user: User | null;
   SignInWithGoogle(): void;
-  SignInWithEmailAndPassword(email: string, password: string): void;
+  // SignInWithEmailAndPassword(email: string, password: string): void;
 }
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const AuthProvider = ({ children }: Props) => {
-  const [loading, setLoading] = useState(false);
+  const loading = false;
   const [user, setUser] = useState<User | null>(null);
 
   const SignInWithGoogle = () => {
@@ -25,14 +25,14 @@ export const AuthProvider = ({ children }: Props) => {
       .catch((error) => console.log(error));
   };
 
-  const SignInWithEmailAndPassword = (email: string, password: string) => {};
+  // const SignInWithEmailAndPassword = (email: string, password: string) => {};
 
   return (
     <AuthContext.Provider
       value={{
         user,
         SignInWithGoogle,
-        SignInWithEmailAndPassword,
+        // SignInWithEmailAndPassword,
       }}
     >
       {loading ? null : children}
