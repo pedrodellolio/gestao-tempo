@@ -1,7 +1,7 @@
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Bars3Icon } from "@heroicons/react/24/solid";
-import Task from "../models/Task";
+import Task from "../models/task";
 
 interface Props {
   tasks: Task[];

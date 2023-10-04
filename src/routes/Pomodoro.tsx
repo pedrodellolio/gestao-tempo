@@ -7,7 +7,7 @@ import {
   ArrowUturnLeftIcon,
 } from "@heroicons/react/24/solid";
 import { usePreferences } from "../hooks/usePreferences";
-import Task from "../models/Task";
+import Task from "../models/task";
 
 const initialMinutes = 5;
 const tasks: Task[] = [

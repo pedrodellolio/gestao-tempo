@@ -5,7 +5,7 @@ import { Calendar, AlarmClock, Tag } from "lucide-react";
 import DatePicker from "./DatePicker";
 import ColorPicker from "./ColorPicker";
 import { useState } from "react";
-import Task from "../models/Task";
+import Task from "../models/task";
 import { PopoverClose } from "@radix-ui/react-popover";
 
 interface Props {

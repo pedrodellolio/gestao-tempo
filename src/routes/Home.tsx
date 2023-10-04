@@ -4,7 +4,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import TaskForm from "../components/TaskForm";
 import brLocale from "@fullcalendar/core/locales/pt-br";
 import { useState } from "react";
-import Task from "../models/Task";
+import Task from "../models/task";
 
 function Home() {
   const [tasks, setTasks] = useState<Task[]>([
@@ -30,7 +30,7 @@ function Home() {
       end: 1694991600000,
     },
   ]);
-  console.log(tasks);
+
   return (
     <main>
       <TaskForm setTasks={setTasks} />

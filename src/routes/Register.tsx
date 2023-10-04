@@ -23,7 +23,7 @@ function Login() {
       <div className="flex flex-col items-center gap-5 bg-[var(--bg-secondary)] p-14 rounded-md mt-32">
         <p className="text-sm font-medium mb-2 self-start">
           Já possui uma conta?{" "}
-          <Link className=" text-[var(--text-accent)]" to={"/login"}>
+          <Link className=" text-[var(--text-accent)]" to={"/auth/login"}>
             Faça o login
           </Link>
         </p>

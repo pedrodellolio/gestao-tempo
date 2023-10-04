@@ -3,24 +3,18 @@ import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { Link } from "react-router-dom";
 import { Label } from "../components/ui/label";
-import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../services/firebase";
 import UndrawLogin from "../assets/undraw_login.svg";
+import { LogIn } from "lucide-react";
+import { useAuth } from "../hooks/useAuth";
 
 function Login() {
+  const { SignInWithGoogle } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleGoogleLogin = () => {
-    signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => console.log(error));
-  };
-
   return (
-    <div className="flex flex-row justify-evenly items-center mx-40">
+    <div className="flex flex-row justify-evenly gap-48 items-center max-w-[1200px] mx-auto">
       <div className="w-96">
         <h1 className="font-semibold text-4xl mt-28">Entre na sua conta</h1>
         <p className="mt-2 text-[var(--text-secondary)]">
@@ -30,8 +24,8 @@ function Login() {
       </div>
       <div className="flex flex-col items-center gap-5 bg-[var(--bg-secondary)] p-14 rounded-md mt-32">
         <p className="text-sm font-medium mb-2 self-start">
-        Não possui uma conta?{" "}
-          <Link className=" text-[var(--text-accent)]" to={"/register"}>
+          Não possui uma conta?{" "}
+          <Link className=" text-[var(--text-accent)]" to={"/auth/register"}>
             Registre-se
           </Link>
         </p>
@@ -74,11 +68,11 @@ function Login() {
         </div>
 
         <Button
-          className="w-full h-10 border-[var(--accent)]"
+          className="w-full h-10 border-[var(--accent)] flex flex-row items-center gap-3"
           variant={"outline"}
-          onClick={handleGoogleLogin}
+          onClick={SignInWithGoogle}
         >
-          Entrar com Google
+          <LogIn /> Entrar com Google
         </Button>
       </div>
     </div>

@@ -5,10 +5,28 @@ import {
   ArrowTrendingUpIcon,
 } from "@heroicons/react/24/outline";
 import { usePreferences } from "../hooks/usePreferences";
+import { User } from "firebase/auth";
 
-function SideBar() {
+interface Props {
+  user: User;
+}
+
+function SideBar(props: Props) {
   const location = useLocation();
   const { isMenuOpen } = usePreferences();
+
+  const fullName = props.user.displayName;
+  let formattedName = "";
+  if (fullName) {
+    const nameParts = fullName.split(" ");
+    const firstName =
+      nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1);
+    const lastName =
+      nameParts[nameParts.length - 1].charAt(0).toUpperCase() +
+      nameParts[nameParts.length - 1].slice(1);
+    formattedName = `${firstName} ${lastName}`;
+  }
+
   return (
     <>
       <aside
@@ -21,10 +39,20 @@ function SideBar() {
             !isMenuOpen && "justify-center"
           } gap-3 rounded-md hover:bg-[var(--bg-dark)] cursor-pointer`}
         >
-          <div className="w-10 h-10 rounded-md bg-zinc-700"></div>
+          {props.user.photoURL ? (
+            <img
+              className="w-10 h-10 rounded-md"
+              src={props.user.photoURL}
+              alt=""
+            />
+          ) : (
+            <div className="w-10 h-10 rounded-md bg-violet-800 flex justify-center items-center text-xl">
+              {fullName?.slice(0, 1).toUpperCase()}
+            </div>
+          )}
           {isMenuOpen && (
             <div className="flex flex-col">
-              <p>Pedro Dell'Olio</p>
+              <p>{formattedName}</p>
               <small className="text-gray-500 font-medium">Ranking 100</small>
             </div>
           )}
