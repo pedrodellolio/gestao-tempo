@@ -12,6 +12,7 @@ const firebaseConfig = {
   measurementId: import.meta.env.FIREBASE_MEASUREMENT_ID,
 };
 console.log(import.meta.env);
+console.log(process.env);
 
 const app = initializeApp(firebaseConfig);
 getAnalytics(app);
