@@ -1,11 +1,16 @@
 import { createContext, useState } from "react";
-import { signInWithPopup, User } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  User,
+} from "firebase/auth";
 import { auth, googleProvider } from "../services/firebase";
 
 interface AuthContextData {
   user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   SignInWithGoogle(): void;
-  // SignInWithEmailAndPassword(email: string, password: string): void;
+  SignInWithEmailAndPassword(email: string, password: string): void;
 }
 
 interface Props {
@@ -25,14 +30,23 @@ export const AuthProvider = ({ children }: Props) => {
       .catch((error) => console.log(error));
   };
 
+  const SignInWithEmailAndPassword = (email: string, password: string) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((credentials) => {
+        setUser(credentials.user);
+      })
+      .catch((error) => console.log(error));
+  };
+
   // const SignInWithEmailAndPassword = (email: string, password: string) => {};
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        setUser,
         SignInWithGoogle,
-        // SignInWithEmailAndPassword,
+        SignInWithEmailAndPassword,
       }}
     >
       {loading ? null : children}

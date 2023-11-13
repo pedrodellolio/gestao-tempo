@@ -6,9 +6,10 @@ import { Label } from "../components/ui/label";
 import UndrawLogin from "../assets/undraw_login.svg";
 import { LogIn } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
+import { User } from "firebase/auth";
 
 function Login() {
-  const { SignInWithGoogle } = useAuth();
+  const { SignInWithGoogle, setUser } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -58,7 +59,12 @@ function Login() {
             Esqueceu a senha?
           </Link>
           <br />
-          <Button className="bg-[var(--accent)] w-full h-10">Entrar</Button>
+          <Button
+            className="bg-[var(--accent)] w-full h-10"
+            onClick={() => setUser({} as User)}
+          >
+            Entrar
+          </Button>
         </form>
 
         <div className="flex flex-row items-center gap-5">
