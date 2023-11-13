@@ -4,7 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar, AlarmClock, Tag } from "lucide-react";
 import DatePicker from "./DatePicker";
 import ColorPicker from "./ColorPicker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PopoverClose } from "@radix-ui/react-popover";
 import Task from "../models/task";
 
@@ -17,6 +17,31 @@ function TaskForm(props: Props) {
   const [startTimeInMs, setStartTimeInMs] = useState(0);
   const [endTimeInMs, setEndTimeInMs] = useState(0);
   const [tagColorInHex, setTagColorInHex] = useState("#fff");
+
+  useEffect(() => {
+    const apiUrl = "http://localhost:8082/list";
+
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch(apiUrl, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Response data:", data);
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  });
 
   const handleTaskCreation = () => {
     const task: Task = {
@@ -31,6 +56,30 @@ function TaskForm(props: Props) {
     setDate(new Date());
     setStartTimeInMs(0);
     setEndTimeInMs(0);
+
+    const apiUrl = 'http://localhost:8082/add';
+
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(task)
+    };
+    
+    fetch(apiUrl, requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Response data:', data);
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+      });
   };
 
   const parseTimeToMilliseconds = (timeString: string) => {
