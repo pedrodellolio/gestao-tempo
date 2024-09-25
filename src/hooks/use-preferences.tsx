@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import PreferencesContext from "../context/PreferencesContext";
+import PreferencesContext from "../context/preferences-context";
 
 export function usePreferences() {
   return useContext(PreferencesContext);

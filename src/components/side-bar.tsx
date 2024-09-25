@@ -1,11 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
-import {
-  CalendarIcon,
-  ClockIcon,
-  ArrowTrendingUpIcon,
-} from "@heroicons/react/24/outline";
-import { usePreferences } from "../hooks/usePreferences";
 import { User } from "firebase/auth";
+import { usePreferences } from "@/hooks/use-preferences";
+import { Calendar, Clock } from "lucide-react";
 
 interface Props {
   user: User;
@@ -32,12 +28,12 @@ function SideBar(props: Props) {
       <aside
         className={`${
           isMenuOpen ? "w-60" : "w-24"
-        } fixed h-full p-6 bg-[var(--bg-primary)] border-r border-[var(--border)]`}
+        } fixed h-full p-6 border-r`}
       >
         <div
           className={`flex flex-row items-center ${
             !isMenuOpen && "justify-center"
-          } gap-3 rounded-md hover:bg-[var(--bg-dark)] cursor-pointer`}
+          } gap-3 rounded-md cursor-pointer`}
         >
           {props.user.photoURL ? (
             <img
@@ -71,7 +67,7 @@ function SideBar(props: Props) {
               "bg-[var(--bg-secondary)] text-white font-medium"
             }`}
           >
-            <CalendarIcon
+            <Calendar
               width={isMenuOpen ? 20 : 22}
               height={isMenuOpen ? 20 : 22}
             />
@@ -84,10 +80,7 @@ function SideBar(props: Props) {
               "bg-[var(--bg-secondary)] text-white font-medium"
             }`}
           >
-            <ClockIcon
-              width={isMenuOpen ? 20 : 22}
-              height={isMenuOpen ? 20 : 22}
-            />
+            <Clock width={isMenuOpen ? 20 : 22} height={isMenuOpen ? 20 : 22} />
             {isMenuOpen && "Pomodoro"}
           </Link>
           <Link
@@ -97,10 +90,10 @@ function SideBar(props: Props) {
               "bg-[var(--bg-secondary)] text-white font-medium"
             }`}
           >
-            <ArrowTrendingUpIcon
+            {/* <ArrowTrendingUp
               width={isMenuOpen ? 20 : 22}
               height={isMenuOpen ? 20 : 22}
-            />
+            /> */}
             {isMenuOpen && "Meu Progresso"}
           </Link>
         </nav>

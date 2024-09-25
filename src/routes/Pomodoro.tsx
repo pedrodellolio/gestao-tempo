@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import PomodoroTimer from "../components/PomodoroTimer";
-import { Button } from "../components/ui/button";
-import {
-  PlayIcon,
-  PauseIcon,
-  ArrowUturnLeftIcon,
-} from "@heroicons/react/24/solid";
-import { usePreferences } from "../hooks/usePreferences";
 import Task from "../models/task";
+import { usePreferences } from "@/hooks/use-preferences";
+import PomodoroTimer from "@/components/pomodoro-timer";
+import { Button } from "@/components/ui/button";
+import { Pause, Play, TimerReset } from "lucide-react";
 
 const initialMinutes = 5;
 const tasks: Task[] = [
@@ -109,16 +105,16 @@ function Pomodoro() {
               onClick={() => setIsRunning((prevState) => !prevState)}
             >
               {isRunning ? (
-                <PauseIcon className="text-white" />
+                <Pause className="text-white" />
               ) : (
-                <PlayIcon className="text-white" />
+                <Play className="text-white" />
               )}
             </Button>
             <Button
               className="border-2 border-gray-600 text-gray-400 rounded-full p-3 hover:border-gray-400 hover:text-white"
               onClick={resetTimer}
             >
-              <ArrowUturnLeftIcon className="w-6 h-6" />
+              <TimerReset className="w-6 h-6" />
             </Button>
           </div>
         </div>
@@ -129,7 +125,10 @@ function Pomodoro() {
               return (
                 <div className="bg-[var(--bg-secondary)] p-3 px-4 rounded-md">
                   <div className="flex flex-row h-12 gap-4">
-                    <div style={{backgroundColor: t.backgroundColor}} className="h-full w-1 rounded-full"></div>
+                    <div
+                      style={{ backgroundColor: t.backgroundColor }}
+                      className="h-full w-1 rounded-full"
+                    ></div>
                     <div>
                       <p>{t.title}</p>
                       <small className="text-[var(--text-secondary)]">
@@ -148,7 +147,10 @@ function Pomodoro() {
               return (
                 <div className="bg-[var(--bg-secondary)] p-3 px-4 rounded-md">
                   <div className="flex flex-row h-12 gap-4">
-                    <div style={{backgroundColor: t.backgroundColor}} className="h-full w-1 rounded-full"></div>
+                    <div
+                      style={{ backgroundColor: t.backgroundColor }}
+                      className="h-full w-1 rounded-full"
+                    ></div>
                     <div>
                       <p>{t.title}</p>
                       <small className="text-[var(--text-secondary)]">

@@ -1,9 +1,9 @@
 import { Paintbrush } from "lucide-react";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { cn } from "../../@/lib/utils";
 import { Input } from "./ui/input";
 import { PopoverClose } from "@radix-ui/react-popover";
+import { cn } from "@/lib/utils";
 
 interface Props {
   value: string;

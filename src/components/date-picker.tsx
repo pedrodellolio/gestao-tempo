@@ -2,10 +2,10 @@ import { CalendarIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
-import { cn } from "../../@/lib/utils";
 import { format } from "date-fns";
-import ptBR from "date-fns/locale/pt-BR";
 import { PopoverClose } from "@radix-ui/react-popover";
+import { cn } from "@/lib/utils";
+import { ptBR } from "date-fns/locale";
 
 interface Props {
   value: Date;

@@ -1,7 +1,8 @@
 export default interface Task {
+  id: string;
   title: string;
-  date: Date;
-  start: number;
-  end: number;
-  backgroundColor: string;
+  dueDate: Date;
+  startTimeInMs: number;
+  endTimeInMs: number;
+  hexColor: string;
 }

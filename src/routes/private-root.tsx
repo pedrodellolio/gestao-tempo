@@ -1,19 +1,18 @@
+import SideBar from "@/components/side-bar";
+import { useAuth } from "@/hooks/use-auth";
+import { usePreferences } from "@/hooks/use-preferences";
 import { Outlet } from "react-router-dom";
-import SideBar from "../components/SideBar";
-import { usePreferences } from "../hooks/usePreferences";
-import { useAuth } from "../hooks/useAuth";
-import Login from "./Login";
+import Login from "./auth/login";
 
 function PrivateRoot() {
   const { user } = useAuth();
-
   const { isMenuOpen } = usePreferences();
 
   return (
     <div>
       {user ? (
         <>
-          <SideBar user={user}/>
+          <SideBar user={user} />
           <div
             className={`${
               isMenuOpen ? "ml-60" : "ml-24"

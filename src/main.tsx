@@ -1,17 +1,20 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import Pomodoro from "./routes/Pomodoro";
-import Home from "./routes/Home";
-import Progresso from "./routes/Progresso";
-import { PreferencesProvider } from "./context/PreferencesContext";
-import Login from "./routes/Login";
-import Register from "./routes/Register";
-import PrivateRoot from "./routes/PrivateRoot";
-import { AuthProvider } from "./context/AuthContext";
-import AuthRoot from "./routes/AuthRoot";
+import AuthRoot from "./routes/auth/auth-root";
+import Login from "./routes/auth/login";
+import Register from "./routes/auth/register";
+import Home from "./routes/home";
+import Pomodoro from "./routes/pomodoro";
+import PrivateRoot from "./routes/private-root";
+import Progress from "./routes/progress";
+import React from "react";
+import { AuthProvider } from "./context/auth-context";
+import { PreferencesProvider } from "./context/preferences-context";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "./components/ui/sonner";
 
+const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: "progresso",
-        element: <Progresso />,
+        element: <Progress />,
       },
     ],
   },
@@ -51,7 +54,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider>
       <PreferencesProvider>
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+          <Toaster position="bottom-right" richColors /> {/* Add Toaster */}
+          <RouterProvider router={router} />
+        </QueryClientProvider>
       </PreferencesProvider>
     </AuthProvider>
   </React.StrictMode>

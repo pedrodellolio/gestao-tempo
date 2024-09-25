@@ -1,85 +1,48 @@
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Calendar, AlarmClock, Tag } from "lucide-react";
-import DatePicker from "./DatePicker";
-import ColorPicker from "./ColorPicker";
-import { useState, useEffect } from "react";
+import Task from "@/models/task";
+import { Dispatch, SetStateAction, useState } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { AlarmClock, Calendar, Tag } from "lucide-react";
+import DatePicker from "../date-picker";
+import ColorPicker from "../color-picker";
 import { PopoverClose } from "@radix-ui/react-popover";
-import Task from "../models/task";
+import { db } from "@/lib/firebase";
+import { addDoc, collection } from "firebase/firestore";
+import { toast } from "sonner";
 
 interface Props {
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  setTasks: Dispatch<SetStateAction<Task[]>>;
 }
+
 function TaskForm(props: Props) {
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [dueDate, setDueDate] = useState(new Date());
   const [startTimeInMs, setStartTimeInMs] = useState(0);
   const [endTimeInMs, setEndTimeInMs] = useState(0);
-  const [tagColorInHex, setTagColorInHex] = useState("#fff");
+  const [hexColor, setHexColor] = useState("#fff");
 
-  useEffect(() => {
-    const apiUrl = "http://localhost:8082/list";
-
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    fetch(apiUrl, requestOptions)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Response data:", data);
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
-  });
-
-  const handleTaskCreation = () => {
-    const task: Task = {
+  const handleTaskCreation = async () => {
+    const task = {
       title,
-      date,
-      start: date.setHours(0, 0, 0, startTimeInMs),
-      end: date.setHours(0, 0, 0, endTimeInMs),
-      backgroundColor: tagColorInHex,
+      dueDate,
+      hexColor,
+      startTimeInMs: dueDate.setHours(0, 0, 0, startTimeInMs),
+      endTimeInMs: dueDate.setHours(0, 0, 0, endTimeInMs),
     };
-    props.setTasks((prevState) => [...prevState, task]);
-    setTitle("");
-    setDate(new Date());
-    setStartTimeInMs(0);
-    setEndTimeInMs(0);
 
-    const apiUrl = 'http://localhost:8082/add';
-
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(task)
-    };
-    
-    fetch(apiUrl, requestOptions)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Response data:', data);
-      })
-      .catch(error => {
-        console.error('Fetch error:', error);
-      });
+    try {
+      const doc = await addDoc(collection(db, "tasks"), task);
+      setTitle("");
+      setDueDate(new Date());
+      setStartTimeInMs(0);
+      setEndTimeInMs(0);
+      props.setTasks((prevState) => [...prevState, { id: doc.id, ...task }]);
+      toast.success("Tarefa criada com sucesso!");
+    } catch (err: any) {
+      toast.error("Ocorreu um erro ao adicionar uma tarefa.");
+      console.error(err);
+    }
   };
 
   const parseTimeToMilliseconds = (timeString: string) => {
@@ -89,7 +52,6 @@ function TaskForm(props: Props) {
     return hoursInMs + minutesInMs;
   };
 
-  console.log({ title, date, startTimeInMs, endTimeInMs, tagColorInHex });
   return (
     <>
       <Popover>
@@ -98,7 +60,7 @@ function TaskForm(props: Props) {
             + Nova Tarefa
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[450px]">
+        <PopoverContent className="w-full">
           <div className="grid gap-4">
             <div className="grid gap-2">
               <div className="flex flex-row items-center gap-3">
@@ -113,7 +75,7 @@ function TaskForm(props: Props) {
               </div>
               <div className="flex flex-row items-center gap-3">
                 <AlarmClock className="text-gray-500" size={24} />
-                <DatePicker value={date} setValue={setDate} />
+                <DatePicker value={dueDate} setValue={setDueDate} />
                 <div className="flex flex-row gap-2 items-center">
                   <Input
                     type="time"
@@ -145,8 +107,8 @@ function TaskForm(props: Props) {
               <div className="flex flex-row items-center gap-3">
                 <Tag className="text-gray-500" size={24} />
                 <ColorPicker
-                  value={tagColorInHex}
-                  setValue={setTagColorInHex}
+                  value={hexColor}
+                  setValue={setHexColor}
                   className="h-8 w-44 border border-[var(--border)]"
                 />
               </div>

@@ -1,6 +1,5 @@
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Bars3Icon } from "@heroicons/react/24/solid";
 import Task from "../models/task";
 
 interface Props {
@@ -36,11 +35,11 @@ function TaskList(props: Props) {
       <Popover>
         <PopoverTrigger asChild>
           <Button className="absolute" variant="link">
-            <Bars3Icon
+            {/* <Bars3Icon
               className="text-[var(--text-secondary)]"
               width={26}
               height={26}
-            />
+            /> */}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[350px] h-[90vh] overflow-scroll">

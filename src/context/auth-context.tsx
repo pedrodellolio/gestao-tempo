@@ -4,7 +4,7 @@ import {
   signInWithPopup,
   User,
 } from "firebase/auth";
-import { auth, googleProvider } from "../services/firebase";
+import { auth, googleProvider } from "@/lib/firebase";
 
 interface AuthContextData {
   user: User | null;
