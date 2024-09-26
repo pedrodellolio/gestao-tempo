@@ -11,9 +11,11 @@ import { db } from "@/lib/firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/use-auth";
 
 function TaskForm() {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
 
   const [title, setTitle] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
@@ -38,12 +40,18 @@ function TaskForm() {
   });
 
   const handleTaskCreation = async () => {
+    if (!user) {
+      toast.error("Você precisa estar logado para criar uma tarefa.");
+      return;
+    }
+
     const newTask = {
       title,
       dueDate,
       hexColor,
       startTimeInMs: dueDate.setHours(0, 0, 0, startTimeInMs),
       endTimeInMs: dueDate.setHours(0, 0, 0, endTimeInMs),
+      userId: user.uid,
     };
 
     createTaskMutation.mutate(newTask);

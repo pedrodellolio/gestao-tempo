@@ -3,14 +3,19 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import brLocale from "@fullcalendar/core/locales/pt-br";
 import TaskForm from "@/components/form/add-task-form";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { EventInput } from "@fullcalendar/core/index.js";
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/use-auth";
 
-const fetchTasks = async () => {
-  const tasksCollection = collection(db, "tasks");
-  const tasksSnapshot = await getDocs(tasksCollection);
+const fetchTasks = async (userId?: string) => {
+  console.log(userId);
+  const tasksQuery = query(
+    collection(db, "tasks"),
+    where("userId", "==", userId)
+  );
+  const tasksSnapshot = await getDocs(tasksQuery);
   return tasksSnapshot.docs.map((doc) => {
     const data = doc.data();
     return {
@@ -20,17 +25,21 @@ const fetchTasks = async () => {
       startTimeInMs: data.startTimeInMs,
       endTimeInMs: data.endTimeInMs,
       hexColor: data.hexColor,
+      userId: data.userId,
     };
   });
 };
 
 function Home() {
+  const { user } = useAuth();
   const {
     data: tasks,
     isLoading,
     error,
-  } = useQuery({ queryKey: ["tasks"], queryFn: fetchTasks });
-
+  } = useQuery({
+    queryKey: ["tasks", user?.uid],
+    queryFn: () => fetchTasks(user?.uid),
+  });
   const parseMsToTime = (ms: number) => {
     return new Date(ms).toLocaleTimeString("pt-BR");
   };

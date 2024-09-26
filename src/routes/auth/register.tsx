@@ -24,6 +24,7 @@ function Register() {
 
     if (password !== confirmPassword) {
       toast.error("As senhas devem ser iguais.");
+      setIsLoading(false);
       return;
     }
 
@@ -50,7 +51,7 @@ function Register() {
     } catch (err: any) {
       toast.error(err.message);
     } finally {
-      setIsLoading(true);
+      setIsLoading(false);
     }
   };
 
