@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { User } from "firebase/auth";
 import { usePreferences } from "@/hooks/use-preferences";
-import { Calendar, Clock } from "lucide-react";
+import { Calendar, Clock, TrendingUp } from "lucide-react";
 
 interface Props {
   user: User;
@@ -26,9 +26,7 @@ function SideBar(props: Props) {
   return (
     <>
       <aside
-        className={`${
-          isMenuOpen ? "w-60" : "w-24"
-        } fixed h-full p-6 border-r`}
+        className={`${isMenuOpen ? "w-60" : "w-24"} fixed h-full p-6 border-r`}
       >
         <div
           className={`flex flex-row items-center ${
@@ -90,10 +88,10 @@ function SideBar(props: Props) {
               "bg-[var(--bg-secondary)] text-white font-medium"
             }`}
           >
-            {/* <ArrowTrendingUp
+            <TrendingUp
               width={isMenuOpen ? 20 : 22}
               height={isMenuOpen ? 20 : 22}
-            /> */}
+            />
             {isMenuOpen && "Meu Progresso"}
           </Link>
         </nav>

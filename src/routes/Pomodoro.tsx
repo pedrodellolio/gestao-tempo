@@ -9,24 +9,24 @@ const initialMinutes = 5;
 const tasks: Task[] = [
   {
     title: "Trabalho POO",
-    backgroundColor: "#ff75c3",
-    date: new Date(),
-    start: 1694991600000,
-    end: 1694991600000,
+    hexColor: "#ff75c3",
+    dueDate: new Date(),
+    startTimeInMs: 1694991600000,
+    endTimeInMs: 1694991600000,
   },
   {
     title: "Prova BD2",
-    backgroundColor: "#ffa647",
-    date: new Date(),
-    start: 1694991600000,
-    end: 1694991600000,
+    hexColor: "#ffa647",
+    dueDate: new Date(),
+    startTimeInMs: 1694991600000,
+    endTimeInMs: 1694991600000,
   },
   {
     title: "Consulta",
-    backgroundColor: "#70e2ff",
-    date: new Date(),
-    start: 1694991600000,
-    end: 1694991600000,
+    hexColor: "#70e2ff",
+    dueDate: new Date(),
+    startTimeInMs: 1694991600000,
+    endTimeInMs: 1694991600000,
   },
 ];
 function Pomodoro() {
@@ -85,9 +85,7 @@ function Pomodoro() {
       </div> */}
       <div className="flex flex-row items-center justify-center">
         <div className="w-full px-24 flex flex-col justify-center items-center gap-5 mt-6">
-          <p className="font-medium text-lg text-[var(--text-secondary)]">
-            Você tem
-          </p>
+          <p className="font-medium text-lg text-muted-foreground">Você tem</p>
           <PomodoroTimer
             currentMinutes={currentMinutes}
             currentSeconds={currentSeconds}
@@ -96,25 +94,24 @@ function Pomodoro() {
             initialMinutes={initialMinutes}
             isRunning={isRunning}
           />
-          <p className="font-medium text-lg text-[var(--text-secondary)]">
+          <p className="font-medium text-lg text-muted-foreground">
             até o seu próximo descanso!
           </p>
           <div className="flex flex-row gap-3 items-baseline ml-12">
             <Button
-              className="bg-[var(--accent)] rounded-full w-14 h-14 hover:bg-[var(--accent-dark)]"
+              className="rounded-full w-14 h-14"
+              size={"icon"}
               onClick={() => setIsRunning((prevState) => !prevState)}
             >
-              {isRunning ? (
-                <Pause className="text-white" />
-              ) : (
-                <Play className="text-white" />
-              )}
+              {isRunning ? <Pause /> : <Play />}
             </Button>
             <Button
-              className="border-2 border-gray-600 text-gray-400 rounded-full p-3 hover:border-gray-400 hover:text-white"
+              variant={"outline"}
+              size={"icon"}
+              className="rounded-full h-12 w-12"
               onClick={resetTimer}
             >
-              <TimerReset className="w-6 h-6" />
+              <TimerReset />
             </Button>
           </div>
         </div>
@@ -123,16 +120,16 @@ function Pomodoro() {
           <div className="mt-2 flex flex-col items-stretch gap-2">
             {tasks.map((t) => {
               return (
-                <div className="bg-[var(--bg-secondary)] p-3 px-4 rounded-md">
+                <div className="bg-secondary p-3 px-4 rounded-md">
                   <div className="flex flex-row h-12 gap-4">
                     <div
-                      style={{ backgroundColor: t.backgroundColor }}
+                      style={{ backgroundColor: t.hexColor }}
                       className="h-full w-1 rounded-full"
                     ></div>
                     <div>
                       <p>{t.title}</p>
-                      <small className="text-[var(--text-secondary)]">
-                        {formatDate(t.date)}
+                      <small className="text-muted-foreground">
+                        {formatDate(t.dueDate)}
                       </small>
                     </div>
                   </div>
@@ -145,16 +142,16 @@ function Pomodoro() {
           <div className="mt-2 flex flex-col items-stretch gap-2">
             {tasks.map((t) => {
               return (
-                <div className="bg-[var(--bg-secondary)] p-3 px-4 rounded-md">
+                <div className="bg-secondary p-3 px-4 rounded-md">
                   <div className="flex flex-row h-12 gap-4">
                     <div
-                      style={{ backgroundColor: t.backgroundColor }}
+                      style={{ backgroundColor: t.hexColor }}
                       className="h-full w-1 rounded-full"
                     ></div>
                     <div>
                       <p>{t.title}</p>
-                      <small className="text-[var(--text-secondary)]">
-                        {formatDate(t.date)}
+                      <small className="text-muted-foreground">
+                        {formatDate(t.dueDate)}
                       </small>
                     </div>
                   </div>

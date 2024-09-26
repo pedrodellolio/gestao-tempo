@@ -60,8 +60,8 @@ function PomodoroTimer({
         }`}
         styles={buildStyles({
           textColor: "white",
-          pathColor: "var(--accent)",
-          trailColor: "var(--border)",
+          pathColor: "hsl(262.1, 83.3%, 57.8%)",
+          trailColor: "hsl(220, 8.9%, 46.1%)",
         })}
       />
     </div>

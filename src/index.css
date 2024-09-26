@@ -82,24 +82,24 @@
 }
 
 .fc-scrollgrid-section-body {
-  background-color: var(--calendar);
+  /* background-color: var(--calendar); */
   color: white;
 }
 
 .fc .fc-button-primary:not(:disabled).fc-button-active,
 .fc .fc-button-primary:not(:disabled):active {
-  background-color: var(--accent-dark);
+  background-color: hsl(var(--secondary));
 }
 .fc-scrollgrid-section-header {
-  background-color: var(--bg-primary);
-  border: 1px solid #1f2937;
+  background-color: hsl(var(--secondary));
+  border: 1px solid hsl(var(--border));
   color: white;
 }
 
 .fc-theme-standard td,
 .fc-theme-standard th,
 .fc-theme-standard .fc-scrollgrid {
-  border: 1px solid #1f2937;
+  border: 1px solid hsl(var(--border));
 }
 
 .fc {
@@ -107,7 +107,7 @@
 }
 
 .fc .fc-button-primary {
-  background-color: var(--accent);
+  background-color: hsl(var(--secondary));
   border: none;
 }
 
@@ -121,7 +121,7 @@
 }
 
 .fc .fc-button-primary:disabled {
-  background-color: var(--bg-primary);
+  background-color: hsl(var(--secondary));
 }
 
 /* .fc .fc-button-primary:hover {
@@ -132,12 +132,8 @@
   padding: 0 2rem;
 }
 
-.fc-col-header-cell div {
-  border-top: 1px solid var(--bg-primary);
-}
-
 .fc-theme-standard th {
-  border-bottom: 1px solid #1f2937;
+  border-bottom: 1px solid hsl(var(--border));
 }
 
 td.fc-daygrid-day {

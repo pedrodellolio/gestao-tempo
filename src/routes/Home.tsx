@@ -1,44 +1,36 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import brLocale from "@fullcalendar/core/locales/pt-br";
-import { useEffect, useState } from "react";
-import Task from "../models/task";
 import TaskForm from "@/components/form/add-task-form";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { EventInput } from "@fullcalendar/core/index.js";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchTasks = async () => {
+  const tasksCollection = collection(db, "tasks");
+  const tasksSnapshot = await getDocs(tasksCollection);
+  return tasksSnapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      title: data.title,
+      dueDate: data.dueDate.toDate(),
+      startTimeInMs: data.startTimeInMs,
+      endTimeInMs: data.endTimeInMs,
+      hexColor: data.hexColor,
+    };
+  });
+};
 
 function Home() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const {
+    data: tasks,
+    isLoading,
+    error,
+  } = useQuery({ queryKey: ["tasks"], queryFn: fetchTasks });
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const tasksCollection = collection(db, "tasks");
-        const tasksSnapshot = await getDocs(tasksCollection);
-
-        const tasksList: Task[] = tasksSnapshot.docs.map((doc) => {
-          const data = doc.data();
-
-          return {
-            title: data.title,
-            dueDate: data.dueDate.toDate(),
-            startTimeInMs: data.startTimeInMs,
-            endTimeInMs: data.endTimeInMs,
-            hexColor: data.hexColor,
-          } as Task;
-        });
-
-        setTasks(tasksList);
-      } catch (error) {
-        console.error("Error fetching tasks: ", error);
-      }
-    };
-
-    fetchTasks();
-  }, []);
-
-  console.log(tasks);
   const parseMsToTime = (ms: number) => {
     return new Date(ms).toLocaleTimeString("pt-BR");
   };
@@ -50,8 +42,7 @@ function Home() {
     return `${year}-${month}-${day}`;
   }
 
-  const data = tasks.map((t) => {
-    console.log(formatDate(t.dueDate) + `T${parseMsToTime(t.startTimeInMs)}`);
+  const data = tasks?.map((t) => {
     return {
       id: t.id,
       title: t.title,
@@ -60,17 +51,20 @@ function Home() {
     } as EventInput;
   });
 
+  if (isLoading) return <p>Carregando...</p>;
+  if (error) return <p>Erro ao carregar tarefas</p>;
+
   return (
     <main>
-      <TaskForm setTasks={setTasks} />
-      <div className="">
+      <TaskForm />
+      <div>
         <FullCalendar
-          plugins={[dayGridPlugin]}
+          plugins={[timeGridPlugin, dayGridPlugin]}
           locale={brLocale}
           headerToolbar={{
             left: "prev,next,today",
             center: "title",
-            right: "timeGridDay,timeGridWeek,dayGridMonth",
+            right: "timeGridDay, timeGridWeek, dayGridMonth",
           }}
           events={data}
           selectable={true}
