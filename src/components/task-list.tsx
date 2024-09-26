@@ -50,7 +50,7 @@ function TaskList(props: Props) {
                 <div className="bg-[var(--bg-secondary)] p-3 rounded-md">
                   <p>{t.title}</p>
                   <small className="text-[var(--text-secondary)]">
-                    {formatDate(t.date)}
+                    {formatDate(t.dueDate)}
                   </small>
                 </div>
               );
@@ -64,7 +64,7 @@ function TaskList(props: Props) {
                 <div className="bg-[var(--bg-secondary)] p-3 rounded-md">
                   <p>{t.title}</p>
                   <small className="text-[var(--text-secondary)]">
-                    {formatDate(t.date)}
+                    {formatDate(t.dueDate)}
                   </small>
                 </div>
               );

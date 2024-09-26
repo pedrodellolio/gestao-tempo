@@ -1,6 +1,6 @@
 export default interface Task {
   id?: string;
-  userId: string;
+  userId?: string;
   title: string;
   dueDate: Date;
   startTimeInMs: number;
