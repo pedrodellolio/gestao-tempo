@@ -33,14 +33,14 @@ function DatePicker(props: Props) {
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
-          <PopoverClose>
+          {/* <PopoverClose> */}
             <Calendar
               locale={ptBR}
               mode="single"
               selected={props.value}
               onDayClick={props.setValue}
             />
-          </PopoverClose>
+          {/* </PopoverClose> */}
         </PopoverContent>
       </Popover>
     </>

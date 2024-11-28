@@ -3,32 +3,13 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import brLocale from "@fullcalendar/core/locales/pt-br";
 import TaskForm from "@/components/form/add-task-form";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { EventInput } from "@fullcalendar/core/index.js";
+import { EventClickArg, EventInput } from "@fullcalendar/core/index.js";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
-
-const fetchTasks = async (userId?: string) => {
-  console.log(userId);
-  const tasksQuery = query(
-    collection(db, "tasks"),
-    where("userId", "==", userId)
-  );
-  const tasksSnapshot = await getDocs(tasksQuery);
-  return tasksSnapshot.docs.map((doc) => {
-    const data = doc.data();
-    return {
-      id: doc.id,
-      title: data.title,
-      dueDate: data.dueDate.toDate(),
-      startTimeInMs: data.startTimeInMs,
-      endTimeInMs: data.endTimeInMs,
-      hexColor: data.hexColor,
-      userId: data.userId,
-    };
-  });
-};
+import { useState } from "react";
+import Task from "@/models/task";
+import { fetchTasks } from "@/api/tasks";
+import UpdateTaskForm from "@/components/form/update-task-form";
 
 function Home() {
   const { user } = useAuth();
@@ -40,8 +21,17 @@ function Home() {
     queryKey: ["tasks", user?.uid],
     queryFn: () => fetchTasks(user?.uid),
   });
+
+  const [isEventOpen, setIsEventOpen] = useState<boolean>(false);
+  const [selectedEventId, setSelectedEventId] = useState<string>("");
+
   const parseMsToTime = (ms: number) => {
-    return new Date(ms).toLocaleTimeString("pt-BR");
+    const hours = Math.floor(ms / (60 * 60 * 1000));
+    const minutes = Math.floor((ms % (60 * 60 * 1000)) / (60 * 1000));
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+      2,
+      "0"
+    )}`;
   };
 
   function formatDate(date: Date) {
@@ -51,14 +41,27 @@ function Home() {
     return `${year}-${month}-${day}`;
   }
 
-  const data = tasks?.map((t) => {
+  const data = tasks?.map((t: Task) => {
     return {
       id: t.id,
       title: t.title,
       start: formatDate(t.dueDate) + `T${parseMsToTime(t.startTimeInMs)}`,
       end: formatDate(t.dueDate) + `T${parseMsToTime(t.endTimeInMs)}`,
+      color: t.hexColor,
     } as EventInput;
   });
+
+  console.log(data);
+
+  const handleEventClick = (info: EventClickArg) => {
+    setSelectedEventId(info.event.id);
+    setIsEventOpen(true);
+  };
+
+  const handleCloseEvent = () => {
+    setIsEventOpen(false);
+    setSelectedEventId("");
+  };
 
   if (isLoading) return <p>Carregando...</p>;
   if (error) return <p>Erro ao carregar tarefas</p>;
@@ -78,8 +81,15 @@ function Home() {
           events={data}
           selectable={true}
           initialView="dayGridMonth"
+          eventClick={handleEventClick}
         />
       </div>
+
+      <UpdateTaskForm
+        isOpen={isEventOpen}
+        onClose={handleCloseEvent}
+        eventId={selectedEventId}
+      />
     </main>
   );
 }

@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
 
-function TaskForm() {
+function AddTaskForm() {
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
@@ -49,10 +49,11 @@ function TaskForm() {
       title,
       dueDate,
       hexColor,
-      startTimeInMs: dueDate.setHours(0, 0, 0, startTimeInMs),
-      endTimeInMs: dueDate.setHours(0, 0, 0, endTimeInMs),
+      startTimeInMs: startTimeInMs,
+      endTimeInMs: endTimeInMs,
       userId: user.uid,
     };
+    console.log(newTask);
 
     createTaskMutation.mutate(newTask);
 
@@ -63,10 +64,13 @@ function TaskForm() {
   };
 
   const parseTimeToMilliseconds = (timeString: string) => {
-    const [hours, minutes] = timeString.split(":");
-    const hoursInMs = parseInt(hours, 10) * 60 * 60 * 1000;
-    const minutesInMs = parseInt(minutes, 10) * 60 * 1000;
-    return hoursInMs + minutesInMs;
+    // const [hours, minutes] = timeString.split(":");
+    // const hoursInMs = parseInt(hours, 10) * 60 * 60 * 1000;
+    // const minutesInMs = parseInt(minutes, 10) * 60 * 1000;
+    // return hoursInMs + minutesInMs;
+    const [hours, minutes] = timeString.split(":").map(Number);
+    console.log(timeString, hours * 60 * 60 * 1000 + minutes * 60 * 1000);
+    return hours * 60 * 60 * 1000 + minutes * 60 * 1000;
   };
 
   return (
@@ -133,7 +137,7 @@ function TaskForm() {
 
         <div className="flex justify-end mt-2">
           <PopoverClose>
-            <Button onClick={handleTaskCreation} className="bg-[var(--accent)]">
+            <Button onClick={handleTaskCreation}>
               Criar Tarefa
             </Button>
           </PopoverClose>
@@ -143,4 +147,4 @@ function TaskForm() {
   );
 }
 
-export default TaskForm;
+export default AddTaskForm;
