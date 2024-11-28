@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { User } from "firebase/auth";
 import { usePreferences } from "@/hooks/use-preferences";
-import { Calendar, Clock, TrendingUp } from "lucide-react";
+import { Calendar, Clock, Settings, TrendingUp } from "lucide-react";
 
 interface Props {
   user: User;
@@ -93,6 +93,20 @@ function SideBar(props: Props) {
               height={isMenuOpen ? 20 : 22}
             />
             {isMenuOpen && "Meu Progresso"}
+          </Link>
+
+          <Link
+            to="settings"
+            className={`flex flex-row items-center gap-3 text-[var(--text-secondary)] rounded-md font-normal p-3 py-2 hover:text-white ${
+              location.pathname === "/settings" &&
+              "bg-[var(--bg-secondary)] text-white font-medium"
+            }`}
+          >
+            <Settings
+              width={isMenuOpen ? 20 : 22}
+              height={isMenuOpen ? 20 : 22}
+            />
+            {isMenuOpen && "Configurações"}
           </Link>
         </nav>
       </aside>

@@ -13,6 +13,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "./components/ui/sonner";
 import Home from "./routes/home";
 import Pomodoro from "./routes/pomodoro";
+import Settings from "./routes/settings";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "progresso",
         element: <Progress />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
       },
     ],
   },

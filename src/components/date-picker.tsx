@@ -9,6 +9,7 @@ import { ptBR } from "date-fns/locale";
 interface Props {
   value: Date;
   setValue: React.Dispatch<React.SetStateAction<Date>>;
+  className?: string;
 }
 
 function DatePicker(props: Props) {
@@ -19,8 +20,8 @@ function DatePicker(props: Props) {
           <Button
             variant={"outline"}
             className={cn(
-              "h-8 w-44 justify-start text-left font-normal border border-[var(--border)]",
-              !props.value && "text-muted-foreground"
+              `h-8 w-44 justify-start text-left font-normal border border-[var(--border)] ${props.className}`,
+              !props.value && `text-muted-foreground`
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
