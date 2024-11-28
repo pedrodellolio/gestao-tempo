@@ -1,7 +1,6 @@
 import { db } from "@/lib/firebase";
 import Task from "@/models/task";
 import {
-  and,
   collection,
   getDocs,
   limitToLast,

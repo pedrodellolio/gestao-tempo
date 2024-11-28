@@ -11,7 +11,6 @@ import { useAuth } from "@/hooks/use-auth";
 import { fetchTask } from "@/api/tasks";
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-import { DialogClose } from "@radix-ui/react-dialog";
 
 interface Props {
   isOpen: boolean;

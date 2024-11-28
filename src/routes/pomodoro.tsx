@@ -4,7 +4,7 @@ import { usePreferences } from "@/hooks/use-preferences";
 import PomodoroTimer from "@/components/pomodoro-timer";
 import { Button } from "@/components/ui/button";
 import { Pause, Play, TimerReset } from "lucide-react";
-import { fetchTasks, fetchTodayTasks } from "@/api/tasks";
+import { fetchTodayTasks } from "@/api/tasks";
 import { useAuth } from "@/hooks/use-auth";
 import { useQuery } from "@tanstack/react-query";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -36,11 +36,7 @@ const initialMinutes = 5;
 function Pomodoro() {
   const { setIsMenuOpen } = usePreferences();
   const { user } = useAuth();
-  const {
-    data: tasks,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: tasks, isLoading } = useQuery({
     queryKey: ["tasks", user?.uid],
     queryFn: () => fetchTodayTasks(user?.uid),
   });

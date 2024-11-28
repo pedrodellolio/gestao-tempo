@@ -3,7 +3,6 @@ import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
 import { format } from "date-fns";
-import { PopoverClose } from "@radix-ui/react-popover";
 import { cn } from "@/lib/utils";
 import { ptBR } from "date-fns/locale";
 
